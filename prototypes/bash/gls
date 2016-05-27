@@ -27,7 +27,7 @@ function displayFile
   filePath=`getLocalPath`
   fileOrigin=`getFileOrigin "$repo"`
 
-  echo -e "$commentColor#$copyrightColor Copyright (C) $accountName $year  $accountEmail  $accountBlog$default"
+  echo -e "$commentColor#$copyrightColor Copyright (C) $accountName $yearRange  $accountEmail  $accountBlog$default"
   echo -e "$commentColor#$default"
   echo -e "$commentColor# ${titleColor}Author  $valuesColor$author <$email>"
   echo -e "$commentColor# ${titleColor}Date    $valuesColor$now"
@@ -170,6 +170,25 @@ function getAccountDetails
   esac
 }
 
+function getYear
+{
+  date +%Y
+}
+
+function getBeginningYear
+{
+  git log | tail | grep Date | tail -n 1 | sed 's/^.* ..:..:.. //g' | cut -d\  -f 1
+}
+
+function getYearRange
+{
+  if [ "$year" == "$beginningYear" ]; then
+    echo "$year"
+  else
+    echo "$beginningYear-$year"
+  fi
+}
+
 
 
 # Process and choose appropriate display.
@@ -237,7 +256,9 @@ repoRoot=`getRepoRoot`
 branch=`getCurrentBranch`
 originAccount=`getOriginAccount "$repo"`
 originName=`getOriginName "$repo"`
-year=`date +%Y`
+year=`getYear`
+beginningYear=`getBeginningYear`
+yearRange=`getYearRange`
 getGithubAccountDetails
 
 accountName=`getAccountName`
