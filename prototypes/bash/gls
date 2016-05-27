@@ -246,29 +246,6 @@ function displayColorPallete
 
 
 
-# Collect information
-tmpPrefix=/tmp/$$-gls
-author=`getAuthor`
-email=`getEmail`
-now=`getDate`
-repo=`getRepo`
-repoRoot=`getRepoRoot`
-branch=`getCurrentBranch`
-originAccount=`getOriginAccount "$repo"`
-originName=`getOriginName "$repo"`
-year=`getYear`
-beginningYear=`getBeginningYear`
-yearRange=`getYearRange`
-getGithubAccountDetails
-
-accountName=`getAccountName`
-accountBlog=`getAccountBlog`
-accountEmail=`getAccountEmail`
-
-cleanupTmp
-
-
-
 # Colour Themeing
 if [ -t 1 ]; then # We are in a terminal, use colour.
   default="\e[39m"
@@ -293,6 +270,29 @@ if [ -t 1 ]; then # We are in a terminal, use colour.
   
   irrelevantColor="$lightBlack"
 fi
+
+
+
+# Collect information
+tmpPrefix=/tmp/$$-gls
+author=`getAuthor`
+email=`getEmail`
+now=`getDate`
+repo=`getRepo`
+repoRoot=`getRepoRoot`
+branch=`getCurrentBranch`
+originAccount=`getOriginAccount "$repo"`
+originName=`getOriginName "$repo"`
+year=`getYear`
+beginningYear=`getBeginningYear`
+yearRange=`getYearRange`
+getGithubAccountDetails
+
+accountName=`getAccountName`
+accountBlog=`getAccountBlog`
+accountEmail=`getAccountEmail`
+
+cleanupTmp
 
 
 
