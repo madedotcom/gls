@@ -1,18 +1,22 @@
 #!/bin/bash
-# Generates header documentation for each file in the current directory based on information stored in the current git repository.
+# Copyright (C) Made.com Tech Team 2016  coders@made.com  http://www.made.com
+#
+# Author  Kevin Sandom <kevin.sandom@made.com>
+# Date    2016-05-27
+# Origin  https://github.com/madedotcom/gls/blob/master/prototypes/bash/gls
+# Repo    git@github.com:madedotcom/gls.git
+# Branch  master
+# File    gls
+#
+# Purpose Generates header documentation for each file in the current directory based on information stored in the current git repository.
 #
 # Usage
-#   Like ls
-#     gls
-#     gls *.sh
-#     gls README.md LICENSE
-#   Pipe to it
-#     find | gls
-
-# Author: Kevin Sandom <kevin.sandom@made.com>
-# Date:   Fri May 27 12:42:33 BST 2016
-# Repo:   git@github.com:madedotcom/gls.git
-# File:   gls
+#         Like ls
+#           gls
+#           gls *.sh
+#           gls README.md LICENSE
+#         Pipe to it
+#           find | gls
 
 
 
@@ -23,27 +27,30 @@ function displayFile
   filePath=`getLocalPath`
   fileOrigin=`getFileOrigin "$repo"`
 
-  echo "# Copyright (C) $accountName $year  $accountEmail  $accountBlog"
-  echo "# Author: $author <$email>"
-  echo "# Date:   $now"
+  echo -e "$commentColor#$copyrightColor Copyright (C) $accountName $year  $accountEmail  $accountBlog$default"
+  echo -e "$commentColor#$default"
+  echo -e "$commentColor# ${titleColor}Author  $valuesColor$author <$email>"
+  echo -e "$commentColor# ${titleColor}Date    $valuesColor$now"
   
   if [ "$fileOrigin" != '' ]; then
-    echo "# Origin: $fileOrigin"
+    echo -e "$commentColor# ${titleColor}Origin  $valuesColor$fileOrigin"
   fi
   
-  echo "# Repo:   $repo"
-  echo "# Branch: $branch"
-  echo "# Account:$originAccount"
+  echo -e "$commentColor# ${titleColor}Repo    $valuesColor$repo"
+  echo -e "$commentColor# ${titleColor}Branch  $valuesColor$branch"
+  echo -e "$commentColor# ${titleColor}File    $fileColor$directoryItem"
+  echo -e "$commentColor#$default"
+  echo -e "$commentColor# ${titleColor}Purpose ${irrelevantColor}TODO fill this in$default"
 }
 
 function displayDirectory
 {
-  echo "# DIRECTORY $1"
+  echo -e "$irrelevantColor# DIRECTORY $1$default"
 }
 
 function displaySymlink
 {
-  echo "# SYMLINK $1"
+  echo -e "$irrelevantColor# SYMLINK $1$default"
 }
 
 
@@ -202,6 +209,24 @@ function chooseFlow
 
 
 
+# Misc
+function displayColorPallete
+{
+  echo -e "$blue blue $default"
+  echo -e "$cyan cyan $default"
+  echo -e "$green green $default"
+  echo -e "$purple purple $default"
+  echo -e "$gray gray $default"
+  echo -e "$white white $default"
+  echo -e "$lightBlue lightBlue $default"
+  echo -e "$lightCyan lightCyan $default"
+  echo -e "$lightGreen lightGreen $default"
+  echo -e "$lightBlack lightBlack $default"
+}
+
+
+
+
 # Collect information
 tmpPrefix=/tmp/$$-gls
 author=`getAuthor`
@@ -220,6 +245,34 @@ accountBlog=`getAccountBlog`
 accountEmail=`getAccountEmail`
 
 cleanupTmp
+
+
+
+# Colour Themeing
+if [ -t 1 ]; then # We are in a terminal, use colour.
+  default="\e[39m"
+  blue="\e[34m"
+  cyan="\e[36m"
+  green="\e[32m"
+  purple="\e[35m"
+  yellow="\e[33m"
+  gray="\e[37m"
+  white="\e[97m"
+  lightBlue="\e[94m"
+  lightCyan="\e[96m"
+  lightGreen="\e[92m"
+  lightBlack="\e[90m"
+  
+  copyrightColor="$green"
+  titleColor="$yellow"
+  valuesColor="$cyan"
+  fileColor="$lightBlack"
+  commentColor="$lightBlack"
+  fileColor="$gray"
+  
+  irrelevantColor="$lightBlack"
+fi
+
 
 
 # Get started.

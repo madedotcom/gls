@@ -1,9 +1,14 @@
 #!/bin/bash
-# Install gls
-# Author: Kevin Sandom <kevin.sandom@made.com>
-# Date:   Fri May 27 12:42:33 BST 2016
-# Repo:   git@github.com:madedotcom/gls.git
-# File:   install
+# Copyright (C) Made.com Tech Team 2016  coders@made.com  http://www.made.com
+#
+# Author  Kevin Sandom <kevin.sandom@made.com>
+# Date    2016-05-27
+# Origin  https://github.com/madedotcom/gls/blob/master/prototypes/bash/install
+# Repo    git@github.com:madedotcom/gls.git
+# Branch  master
+# File    install
+#
+# Purpose Installs gls into the user's home directory.
 
 mkdir -p ~/bin
 cd ~/bin
