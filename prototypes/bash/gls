@@ -10,7 +10,7 @@ function displayFile
   echo "# Author: $author <$email>"
   echo "# Date:   $now"
   
-  if [ "$fileOrigin" != "" ]; then
+  if [ "$fileOrigin" != '' ]; then
     echo "# Origin: $fileOrigin"
   fi
   
@@ -71,6 +71,25 @@ function processListing
 
 
 
+# Flow
+function likeLS
+{
+  ls "$@" | processListing
+}
+
+function chooseFlow
+{
+  if [ "$1" != '' ]; then
+    likeLS "$@"
+  elif [ ! -t 0 ]; then
+    processListing
+  else
+    likeLS
+  fi
+}
+
+
+
 # Get information
 author=`getAuthor`
 email=`getEmail`
@@ -78,5 +97,6 @@ now=`date`
 repo=`getRepo`
 fileOrigin=`getFileOrigin "$repo"`
 
+
 # Get started.
-ls "$@" | processListing
+chooseFlow "$@"
