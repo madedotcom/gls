@@ -23,6 +23,7 @@ function displayFile
   filePath=`getLocalPath`
   fileOrigin=`getFileOrigin "$repo"`
 
+  echo "# Copyright (C) $accountName $year  $accountEmail  $accountBlog"
   echo "# Author: $author <$email>"
   echo "# Date:   $now"
   
@@ -128,6 +129,40 @@ function getCurrentBranch
   git branch | grep '^\*' | cut -b 3-
 }
 
+function getGithubAccountDetails
+{
+  curl -s "https://api.github.com/users/$originAccount" > "$tmpPrefix-accountDetails"
+}
+
+function getAccountName
+{
+  grep "\"name\"" "$tmpPrefix-accountDetails" | cut -d\" -f4
+}
+
+function getAccountBlog
+{
+  grep "\"blog\"" "$tmpPrefix-accountDetails" | cut -d\" -f4
+}
+
+function getAccountEmail
+{
+  grep "\"email\"" "$tmpPrefix-accountDetails" | cut -d\" -f4
+}
+
+function cleanupTmp
+{
+  rm "$tmpPrefix*" 2> /dev/null
+}
+
+function getAccountDetails
+{
+  case "$domain" in
+    "github.com")
+      getGithubAccountDetails
+    ;;
+  esac
+}
+
 
 
 # Process and choose appropriate display.
@@ -168,6 +203,7 @@ function chooseFlow
 
 
 # Collect information
+tmpPrefix=/tmp/$$-gls
 author=`getAuthor`
 email=`getEmail`
 now=`getDate`
@@ -176,6 +212,14 @@ repoRoot=`getRepoRoot`
 branch=`getCurrentBranch`
 originAccount=`getOriginAccount "$repo"`
 originName=`getOriginName "$repo"`
+year=`date +%Y`
+getGithubAccountDetails
+
+accountName=`getAccountName`
+accountBlog=`getAccountBlog`
+accountEmail=`getAccountEmail`
+
+cleanupTmp
 
 
 # Get started.
