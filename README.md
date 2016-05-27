@@ -32,6 +32,29 @@ Generates header documentation for each file in the current directory of a git r
 
 * [github.com](https://github.com)
 
-## A big thank you
+# Installing it
+
+    git clone git@github.com:madedotcom/gls.git
+    cd prototypes/bash/
+    ./install
+
+# Using it
+
+## Like `ls`
+
+Get into a git directory. Use it like ls. Eg
+
+* `gls`
+* `gls *sh`
+* `gls README.md LICENSE`
+
+## Pipe filenames to it
+
+Get into a git directory. Use it like ls. Eg
+
+* `find | gls`
+* `find -iname 'README*' | gls`
+
+# A big thank you
 
 To [made.com](http://www.made.com) who give us Friday time to make cool or useful tools like this.
