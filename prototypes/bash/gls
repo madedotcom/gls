@@ -3,9 +3,19 @@
 #
 # Usage
 
+
+# How to display stuff.
 function displayFile
 {
-  echo "# FILE $1"
+  echo "# Author: $author <$email>"
+  echo "# Date:   $now"
+  
+  if [ "$fileOrigin" != "" ]; then
+    echo "# Origin: $fileOrigin"
+  fi
+  
+  echo "# Repo:   $repo"
+  echo "# File:   $1"
 }
 
 function displayDirectory
@@ -18,6 +28,32 @@ function displaySymlink
   echo "# SYMLINK $1"
 }
 
+
+
+# Harvest information
+function getAuthor
+{
+  git config --global user.name
+}
+
+function getEmail
+{
+  git config --global user.email
+}
+
+function getRepo
+{
+  git config --local remote.origin.url
+}
+
+function getFileOrigin
+{
+  echo "$1" | cut -d@ -f 2 | cut -d: -f1
+}
+
+
+
+# Process and choose appropriate display.
 function processListing
 {
   while read directoryItem;do
@@ -28,7 +64,19 @@ function processListing
     elif [ -h "$directoryItem" ]; then # Symlink
       displaySymlink "$directoryItem"
     fi
+    
+    echo
   done
 }
 
+
+
+# Get information
+author=`getAuthor`
+email=`getEmail`
+now=`date`
+repo=`getRepo`
+fileOrigin=`getFileOrigin "$repo"`
+
+# Get started.
 ls "$@" | processListing
