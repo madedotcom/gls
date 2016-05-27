@@ -2,6 +2,32 @@
 
 Generates header documentation for each file in the current directory based on information stored in the current git repository.
 
+    ksandom@areallysuspiciouscomputer:~/files/work/made/repos/gls/prototypes/bash$ ls
+    gls  install
+
+    ksandom@areallysuspiciouscomputer:~/files/work/made/repos/gls/prototypes/bash$ gls
+    # Copyright (C) Made.com Tech Team 2016  coders@made.com  http://www.made.com
+    #
+    # Author  Kevin Sandom <kevin.sandom@made.com>
+    # Date    2016-05-27
+    # Origin  https://github.com/madedotcom/gls/blob/master/prototypes/bash/gls
+    # Repo    git@github.com:madedotcom/gls.git
+    # Branch  master
+    # File    gls
+    #
+    # Purpose TODO fill this in
+
+    # Copyright (C) Made.com Tech Team 2016  coders@made.com  http://www.made.com
+    #
+    # Author  Kevin Sandom <kevin.sandom@made.com>
+    # Date    2016-05-27
+    # Origin  https://github.com/madedotcom/gls/blob/master/prototypes/bash/install
+    # Repo    git@github.com:madedotcom/gls.git
+    # Branch  master
+    # File    install
+    #
+    # Purpose TODO fill this in
+
 # Tested with
 
 * [github.com](https://github.com)
