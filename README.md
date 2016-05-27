@@ -1,6 +1,6 @@
 # GLS - Git Listing
 
-Generates header documentation for each file in the current directory based on information stored in the current git repository.
+Generates header documentation for each file in the current directory of a git repository based on information stored in the current git repository.
 
     ksandom@areallysuspiciouscomputer:~/files/work/made/repos/gls/prototypes/bash$ ls
     gls  install
