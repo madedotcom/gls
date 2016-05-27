@@ -38,7 +38,7 @@ function displayFile
   
   echo -e "$commentColor# ${titleColor}Repo    $valuesColor$repo"
   echo -e "$commentColor# ${titleColor}Branch  $valuesColor$branch"
-  echo -e "$commentColor# ${titleColor}File    $fileColor$directoryItem"
+  echo -e "$commentColor# ${titleColor}File    $fileColor$filePath/$directoryItem"
   echo -e "$commentColor#$default"
   echo -e "$commentColor# ${titleColor}Purpose ${irrelevantColor}TODO fill this in$default"
 }
