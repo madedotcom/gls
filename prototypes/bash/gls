@@ -2,6 +2,12 @@
 # Generates header documentation for each file in the current directory based on information stored in the current git repository.
 #
 # Usage
+#   Like ls
+#     gls
+#     gls *.sh
+#     gls README.md LICENSE
+#   Pipe to it
+#     find | gls
 
 # Author: Kevin Sandom <kevin.sandom@made.com>
 # Date:   Fri May 27 12:42:33 BST 2016
@@ -13,6 +19,10 @@
 # How to display stuff.
 function displayFile
 {
+  fileName="$1"
+  filePath=`getLocalPath`
+  fileOrigin=`getFileOrigin "$repo"`
+
   echo "# Author: $author <$email>"
   echo "# Date:   $now"
   
@@ -21,7 +31,12 @@ function displayFile
   fi
   
   echo "# Repo:   $repo"
-  echo "# File:   $1"
+  echo "# Branch: $branch"
+  echo "# File:   $fileName"
+  echo "# Root:   $repoRoot"
+  echo "# Path:   $filePath"
+  echo "# Account:$originAccount"
+  echo "# Name:   $originName"
 }
 
 function displayDirectory
@@ -36,7 +51,7 @@ function displaySymlink
 
 
 
-# Harvest information
+# Functions for harvesting information
 function getAuthor
 {
   git config --global user.name
@@ -52,9 +67,69 @@ function getRepo
   git config --local remote.origin.url
 }
 
-function getFileOrigin
+function getOriginDomain
 {
   echo "$1" | cut -d@ -f 2 | cut -d: -f1
+}
+
+function getOriginAccount
+{
+  echo "$1" | cut -d: -f 2 | cut -d/ -f1
+}
+
+function getOriginName
+{
+  echo "$1" | sed 's#.*/##g' | cut -d. -f1
+}
+
+function getRepoRoot
+{
+  start=`pwd`
+  subGetRepoRoot 0
+  cd "$start"
+}
+
+function subGetRepoRoot
+{
+  count="$1"
+  
+  if [ -d .git ]; then # Found it!
+    pwd
+  elif [ "`pwd`" == '/' ]; then # stop if we get to root.
+    false
+  elif [ $count -gt 400 ]; then # Reached max count. Stop looking. If someone has this many levels of directories, they may have other problems.
+    false
+  else # Continue looking.
+    cd ..
+    let count=$count+1
+    subGetRepoRoot $count
+  fi
+}
+
+function getLocalPath
+{
+  pwd | sed "s#^$repoRoot##g"
+}
+
+function getFileOrigin
+{
+  domain=`getOriginDomain $1`
+  
+  case "$domain" in
+    "github.com")
+      echo "https://$domain/$originAccount/$originName/blob/master$filePath/$fileName"
+    ;;
+  esac
+}
+
+function getDate
+{
+  date +%Y-%m-%d
+}
+
+function getCurrentBranch
+{
+  git branch | grep '^\*' | cut -b 3-
 }
 
 
@@ -96,12 +171,15 @@ function chooseFlow
 
 
 
-# Get information
+# Collect information
 author=`getAuthor`
 email=`getEmail`
-now=`date`
+now=`getDate`
 repo=`getRepo`
-# fileOrigin=`getFileOrigin "$repo"`
+repoRoot=`getRepoRoot`
+branch=`getCurrentBranch`
+originAccount=`getOriginAccount "$repo"`
+originName=`getOriginName "$repo"`
 
 
 # Get started.
