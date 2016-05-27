@@ -32,11 +32,7 @@ function displayFile
   
   echo "# Repo:   $repo"
   echo "# Branch: $branch"
-  echo "# File:   $fileName"
-  echo "# Root:   $repoRoot"
-  echo "# Path:   $filePath"
   echo "# Account:$originAccount"
-  echo "# Name:   $originName"
 }
 
 function displayDirectory
