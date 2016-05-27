@@ -3,6 +3,12 @@
 #
 # Usage
 
+# Author: Kevin Sandom <kevin.sandom@made.com>
+# Date:   Fri May 27 12:42:33 BST 2016
+# Repo:   git@github.com:madedotcom/gls.git
+# File:   gls
+
+
 
 # How to display stuff.
 function displayFile
@@ -95,7 +101,7 @@ author=`getAuthor`
 email=`getEmail`
 now=`date`
 repo=`getRepo`
-fileOrigin=`getFileOrigin "$repo"`
+# fileOrigin=`getFileOrigin "$repo"`
 
 
 # Get started.

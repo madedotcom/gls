@@ -1,0 +1,10 @@
+#!/bin/bash
+# Install gls
+# Author: Kevin Sandom <kevin.sandom@made.com>
+# Date:   Fri May 27 12:42:33 BST 2016
+# Repo:   git@github.com:madedotcom/gls.git
+# File:   install
+
+mkdir -p ~/bin
+cd ~/bin
+ln -s ~-/gls .
