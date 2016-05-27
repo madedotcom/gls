@@ -1,0 +1,34 @@
+#!/bin/bash
+# Generates header documentation for each file in the current directory based on information stored in the current git repository.
+#
+# Usage
+
+function displayFile
+{
+  echo "# FILE $1"
+}
+
+function displayDirectory
+{
+  echo "# DIRECTORY $1"
+}
+
+function displaySymlink
+{
+  echo "# SYMLINK $1"
+}
+
+function processListing
+{
+  while read directoryItem;do
+    if [ -f "$directoryItem" ]; then # File
+      displayFile "$directoryItem"
+    elif [ -d "$directoryItem" ]; then # Directory
+      displayDirectory "$directoryItem"
+    elif [ -h "$directoryItem" ]; then # Symlink
+      displaySymlink "$directoryItem"
+    fi
+  done
+}
+
+ls "$@" | processListing
